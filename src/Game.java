@@ -2,6 +2,8 @@ import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Canvas;
 
+// Game class
+// just a comment . . .
 public class Game extends Canvas implements Runnable {
 
     public static int width = 300; // we will render at 300 and scale up to get a bigger image - better on resources

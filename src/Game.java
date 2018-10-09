@@ -19,6 +19,8 @@ public class Game extends Canvas implements Runnable {
     private JFrame frame;
     private boolean running = false;
 
+    private Screen screen;
+
     // raster stuff
     private BufferedImage image = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
@@ -28,6 +30,7 @@ public class Game extends Canvas implements Runnable {
         setPreferredSize(size);
 
         frame = new JFrame();
+        screen = new Screen(width,height);
     }
 
     public synchronized void start(){
@@ -63,10 +66,16 @@ public class Game extends Canvas implements Runnable {
             return;
         }
 
+        screen.render();
+        for(int i=0; i<pixels.length; i++){
+            pixels[i] = screen.pixels[i];
+        }
+
         Graphics g = bs.getDrawGraphics(); // link graphics to the buffer strategy
         // BEGIN: graphics code
         g.setColor(new Color(100,100,10));
         g.fillRect(0,0,getWidth(),getHeight());
+        g.drawImage(image, 0,0, getWidth(), getHeight(), null); // screen class test
         // END: graphics code
         g.dispose(); // remove graphics at the end of the frame
         bs.show();

@@ -12,7 +12,7 @@ public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 1L;
 
     public static int width = 300; // we will render at 300 and scale up to get a bigger image - better on resources
-    public static int height = width / 16 * 9;
+    public static int height = width / 16 * 9; // 168.5
     public static int scale = 3;
 
     private Thread thread;

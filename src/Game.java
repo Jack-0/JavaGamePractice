@@ -11,6 +11,7 @@ public class Game extends Canvas implements Runnable {
 
     private static final long serialVersionUID = 1L;
 
+    public static String title = "My Game";
     public static int width = 300; // we will render at 300 and scale up to get a bigger image - better on resources
     public static int height = width / 16 * 9; // 168.5
     public static int scale = 3;
@@ -49,9 +50,33 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void run() {
+
+        long timer = System.currentTimeMillis();
+        long lastTime = System.nanoTime();
+        final double ns = 1000000000.0 / 60.0;
+        double delta = 0;
+
+        int frames = 0;
+        int updates = 0;
+
         while(running){
-            update(); // tick
+
+            long now = System.nanoTime();
+            delta += (now-lastTime) / ns;
+            lastTime = now;
+            while(delta >= 1) { // will only happen 60 times a second
+                update(); // tick
+                updates++;
+                delta--;
+            }
             render();
+            frames++;
+            if(System.currentTimeMillis() - timer > 1000){ // if a second has passed
+                timer += 1000;
+                //frame.setTitle(title +" - fps: "+frames);
+                System.out.println("ups = " + updates + ", fps = " + frames);
+                frames = updates = 0;
+            }
         }
     }
 
@@ -87,7 +112,7 @@ public class Game extends Canvas implements Runnable {
     public static void main(String args[]){
         Game game = new Game();
         game.frame.setResizable(false);
-        game.frame.setTitle("Java Game Practice");
+        game.frame.setTitle(game.title);
         game.frame.add(game);
         game.frame.pack();
         game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

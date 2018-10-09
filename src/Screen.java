@@ -15,17 +15,12 @@ public class Screen {
             pixels[i]=0;
         }
     }
-    int counter=0, time=0;
 
     public void render(){
-        counter++;
-        if(counter % 100 == 0){
-            time++;
-        }
         for(int y = 0; y<height; y++){
             for(int x = 0; x<width; x++){
                 //pixels[x+y*width] = 0xff00ff;
-                pixels[time+time*width] = 0xff000ff;
+                pixels[40+2*width] = 0xff000ff;
             }
         }
     }

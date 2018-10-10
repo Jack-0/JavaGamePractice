@@ -1,3 +1,5 @@
+// package game
+
 import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -20,6 +22,8 @@ public class Game extends Canvas implements Runnable {
     private JFrame frame;
     private boolean running = false;
 
+    private Keyboard key;
+
     private Screen screen;
 
     // raster stuff
@@ -32,6 +36,8 @@ public class Game extends Canvas implements Runnable {
 
         frame = new JFrame();
         screen = new Screen(width,height);
+        key = new Keyboard();
+        addKeyListener(key);
     }
 
     public synchronized void start(){
@@ -84,6 +90,7 @@ public class Game extends Canvas implements Runnable {
     int x=0,y=0; //TODO
 
     public void update(){
+        key.update();
         x++;
     }
 
@@ -123,5 +130,6 @@ public class Game extends Canvas implements Runnable {
         game.frame.setVisible(true);
 
         game.start();
+        game.requestFocus();
     }
 }

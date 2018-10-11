@@ -1,7 +1,7 @@
-// package game.graphics
+package game.graphics;
 
-import java.beans.ParameterDescriptor;
 import java.util.Random;
+
 
 public class Screen {
 

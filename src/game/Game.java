@@ -1,11 +1,12 @@
-// package game
+package game;
 
+import game.input.Keyboard;
+import game.graphics.Screen;
 import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-
 
 // Game class
 // just a comment . . .

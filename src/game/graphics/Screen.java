@@ -40,7 +40,8 @@ public class Screen {
                 //if(xx < 0 || xx > width) break;
                 int tileIndex = ((xx >> 4) & MAP_SIZE_MASK) + ((yy >> 4) & MAP_SIZE_MASK) * MAP_SIZE; // ensure index
                                                                                                       // doesn't out_bnd
-                pixels[x + y * width] = tiles[tileIndex];
+                //pixels[x + y * width] = tiles[tileIndex]; //TODO colours :))
+                pixels[x + y * width] = Sprite.grass.pixels[(x&15) + (y&15) * Sprite.grass.SIZE];
             }
         }
     }

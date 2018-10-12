@@ -33,15 +33,12 @@ public class Screen {
 
     public void render(int xOffset, int yOffset){ //TODO
         for(int y=0; y<height; y++){
-            int yy = y+yOffset; // Todo . . . was yy=y;
-            //if(yy < 0 || yy > height) break;
+            int yp = y + yOffset;
+            if(yp < 0 || yp >= height)continue;
             for(int x=0; x<width; x++){
-                int xx = x+xOffset; // Todo . . . was xx=x;
-                //if(xx < 0 || xx > width) break;
-                int tileIndex = ((xx >> 4) & MAP_SIZE_MASK) + ((yy >> 4) & MAP_SIZE_MASK) * MAP_SIZE; // ensure index
-                                                                                                      // doesn't out_bnd
-                //pixels[x + y * width] = tiles[tileIndex]; //TODO colours :))
-                pixels[x + y * width] = Sprite.grass.pixels[(x&15) + (y&15) * Sprite.grass.SIZE];
+                int xp = x + xOffset;
+                if(xp < 0 || xp >= width)continue;
+                pixels[xp + yp * width] = Sprite.grass.pixels[(x&15) + (y&15) * Sprite.grass.SIZE];
             }
         }
     }

@@ -1,0 +1,35 @@
+package game.level;
+
+import game.graphics.Screen;
+
+public class Level {
+
+    private int width, height;
+    private int[] tiles;
+
+    public Level(int width, int height) {
+        this.width = width;
+        this.height = height;
+        tiles = new int[width*height];
+        generateLvl();
+    }
+
+    public Level(String path) {
+        loadLevel(path);
+    }
+
+    private void generateLvl() {
+    }
+
+    private void loadLevel(String path) {
+    }
+
+    public void update() {
+    }
+
+    private void time(){
+    }
+
+    public void render(int xScroll, int yScroll, Screen screen) {
+    }
+}

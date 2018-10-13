@@ -2,6 +2,9 @@ package game;
 
 import game.input.Keyboard;
 import game.graphics.Screen;
+import game.level.Level;
+import game.level.RandomLevel;
+
 import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -24,8 +27,8 @@ public class Game extends Canvas implements Runnable {
     private boolean running = false;
 
     private Keyboard key;
-
     private Screen screen;
+    private Level level;
 
     // raster stuff
     private BufferedImage image = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);
@@ -38,6 +41,7 @@ public class Game extends Canvas implements Runnable {
         frame = new JFrame();
         screen = new Screen(width,height);
         key = new Keyboard();
+        level = new RandomLevel(64,64); // new level that's 64 by 64 tiles
         addKeyListener(key);
     }
 
@@ -108,18 +112,16 @@ public class Game extends Canvas implements Runnable {
         }
 
         screen.clear();
-        screen.render(x,y); //TODO
+        level.render(x,y,screen);
 
         for(int i=0; i<pixels.length; i++){
             pixels[i] = screen.pixels[i];
         }
 
         Graphics g = bs.getDrawGraphics(); // link graphics to the buffer strategy
-        // BEGIN: graphics code
         g.setColor(new Color(100,100,10));
         g.fillRect(0,0,getWidth(),getHeight());
         g.drawImage(image, 0,0, getWidth(), getHeight(), null); // screen class test
-        // END: graphics code
         g.dispose(); // remove graphics at the end of the frame
         bs.show();
     }

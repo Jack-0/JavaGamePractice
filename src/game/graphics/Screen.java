@@ -20,7 +20,7 @@ public class Screen {
     public Screen(int width, int height){
         this.width = width;
         this.height = height;
-        pixels = new int[width * height]; // 50,400
+        pixels = new int[width * height * MAP_SIZE]; // 50,400
         for(int i=0; i< MAP_SIZE*MAP_SIZE; i++){
             tiles[i]=random.nextInt(0xffffff); // give each tile a random color when class is created
             // create a black square to show loop

@@ -30,6 +30,11 @@ public class Game extends Canvas implements Runnable {
     private Screen screen;
     private Level level;
 
+    private int fps = 0;
+
+    public void setFps(int fps) {this.fps = fps;}
+    public int getFps() {return fps;}
+
     // raster stuff
     private BufferedImage image = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
@@ -60,6 +65,7 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
+
     public void run() {
 
         requestFocus();
@@ -87,7 +93,8 @@ public class Game extends Canvas implements Runnable {
             if(System.currentTimeMillis() - timer > 1000){ // if a second has passed
                 timer += 1000;
                 //frame.setTitle(title +" - fps: "+frames);
-                System.out.println("ups = " + updates + ", fps = " + frames);
+                //System.out.println("ups = " + updates + ", fps = " + frames);
+                setFps(frames);
                 frames = updates = 0;
             }
         }
@@ -108,11 +115,11 @@ public class Game extends Canvas implements Runnable {
         key.update();
         int speed = 2;
 
+        // move the checks into render tile method ?
         if(key.right) {
             if(inTheMap(x,y)){
                 lastX = x; lastY = y;
                 x+=speed;
-                System.out.println("x="+x+" y="+y);
             }
             else{
                 x = lastX;
@@ -123,7 +130,6 @@ public class Game extends Canvas implements Runnable {
             if(inTheMap(x,y)){
                 lastX = x; lastY = y;
                 y-=speed;
-                System.out.println("x="+x+" y="+y);
             }
             else{
                 x = lastX;
@@ -134,7 +140,6 @@ public class Game extends Canvas implements Runnable {
             if(inTheMap(x,y)){
                 lastX = x; lastY = y;
                 x -= speed;
-                System.out.println("x=" + x + " y=" + y);
             }
             else{
                 x = lastX;
@@ -145,7 +150,6 @@ public class Game extends Canvas implements Runnable {
             if(inTheMap(x,y)){
                 lastX = x; lastY = y;
                 y += speed;
-               System.out.println("x=" + x + " y=" + y);
             }
             else{
                 x = lastX;
@@ -172,6 +176,14 @@ public class Game extends Canvas implements Runnable {
         g.setColor(new Color(100,100,10));
         g.fillRect(0,0,getWidth(),getHeight());
         g.drawImage(image, 0,0, getWidth(), getHeight(), null); // screen class test
+
+        g.setColor(Color.black);
+        g.setFont(new Font("Helvetica",1,14));
+
+        g.drawString("fps: " + getFps(), 2, 12);
+        g.drawString("x:    " + x, 2, 26);
+        g.drawString("y:    " + y, 2, 40);
+
         g.dispose(); // remove graphics at the end of the frame
         bs.show();
     }

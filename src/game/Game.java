@@ -95,13 +95,63 @@ public class Game extends Canvas implements Runnable {
 
     // game tick
     int x=0,y=0; //TODO
+    int lastX = 0, lastY = 0;
+
+    public boolean inTheMap(int x, int y){
+        if(x<730 && x>-6 && y<866 && y>-6)
+            return true;
+        return false;
+    }
 
     public void update(){
+
         key.update();
-        if(key.right) x++;
-        if(key.up)    y--;
-        if(key.left)  x--;
-        if(key.down)  y++;
+        int speed = 2;
+
+        if(key.right) {
+            if(inTheMap(x,y)){
+                lastX = x; lastY = y;
+                x+=speed;
+                System.out.println("x="+x+" y="+y);
+            }
+            else{
+                x = lastX;
+                y = lastY;
+            }
+        }
+        if(key.up) {
+            if(inTheMap(x,y)){
+                lastX = x; lastY = y;
+                y-=speed;
+                System.out.println("x="+x+" y="+y);
+            }
+            else{
+                x = lastX;
+                y = lastY;
+            }
+        }
+        if(key.left) {
+            if(inTheMap(x,y)){
+                lastX = x; lastY = y;
+                x -= speed;
+                System.out.println("x=" + x + " y=" + y);
+            }
+            else{
+                x = lastX;
+                y = lastY;
+            }
+        }
+        if(key.down) {
+            if(inTheMap(x,y)){
+                lastX = x; lastY = y;
+                y += speed;
+               System.out.println("x=" + x + " y=" + y);
+            }
+            else{
+                x = lastX;
+                y = lastY;
+            }
+        }
     }
 
     public void render(){

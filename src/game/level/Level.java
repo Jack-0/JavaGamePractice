@@ -1,6 +1,7 @@
 package game.level;
 
 import game.graphics.Screen;
+import game.graphics.Sprite;
 import game.level.tile.Tile;
 
 public class Level {
@@ -33,11 +34,13 @@ public class Level {
 
     public void render(int xScroll, int yScroll, Screen screen) {
         screen.setOffset(xScroll, yScroll);
+
+        // render the map
         // pixel precision to tile precision
         int x0 = xScroll >> 4;// left side of the screen and turn the 32 pixels into 1 tile
-        int x1 = (xScroll + screen.width) >> 4; // right side of screen
+        int x1 = (xScroll + screen.width + 16) >> 4; // right side of screen, 16 ensures we don't have a black bar
         int y0 = yScroll >> 4; // top
-        int y1 = (yScroll + screen.width) >> 4; // bottom
+        int y1 = (yScroll + screen.width + 16) >> 4; // bottom, +16 to remove black bar this should be tile.SIZE really!
 
         // render from the top left to bottom right of screen.width \/
         for(int y=y0; y<y1; y++){
@@ -48,6 +51,7 @@ public class Level {
     }
 
     public Tile getTile(int x, int y){
+        if( x<0 || y<0 || x>= width || y>= height) return  Tile.voidTile;
         if(tiles[x+y*width]==0) return Tile.grass;
         return Tile.voidTile;
     }

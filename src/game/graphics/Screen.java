@@ -20,12 +20,12 @@ public class Screen {
     public Screen(int width, int height){
         this.width = width;
         this.height = height;
-        pixels = new int[width * height * MAP_SIZE]; // 50,400
-        for(int i=0; i< MAP_SIZE*MAP_SIZE; i++){
-            tiles[i]=random.nextInt(0xffffff); // give each tile a random color when class is created
+        pixels = new int[width * height * 2]; // 50,625 why *2 remove and debug with break point
+        //for(int i=0; i< MAP_SIZE*MAP_SIZE; i++){
+            //tiles[i]=random.nextInt(0xffffff); // give each tile a random color when class is created
             // create a black square to show loop
-            tiles[0]=0;tiles[1]=0;tiles[64]=0;tiles[1+64]=0;
-        }
+            //tiles[0]=0;tiles[1]=0;tiles[64]=0;tiles[1+64]=0;
+        //}
     }
 
     // Clean the screen
@@ -43,7 +43,8 @@ public class Screen {
             int ya = y + yp; // absolute position
             for(int x=0; x<tile.sprite.SIZE; x++){
                 int xa = x + xp;
-                if(xa<0 || xa>=width || ya<0 || ya>=width) break; // if tile is off the screen don't render
+                if(xa<-tile.sprite.SIZE || xa>=width || ya<0 || ya>=width) break; // if tile is off the screen don't render
+                if(xa<0) xa =0;
                 // pixels[]   = pixels on screen
                 // tile.s.p[] = what pixels in sprite to render
                 pixels[xa + ya * width] = tile.sprite.pixels[ x + y * tile.sprite.SIZE]; // render sprite

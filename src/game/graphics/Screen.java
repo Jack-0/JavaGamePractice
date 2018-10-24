@@ -53,13 +53,20 @@ public class Screen {
         xp -= xOffset;
         yp -= yOffset;
 
+        // TODO: blue #0000ff is are transparent colour apposed to pink which is #ff00ff
+
         for(int y=0; y<sprite.SIZE; y++){
             int ya = y + yp; // absolute position
             for(int x=0; x<sprite.SIZE; x++){
                 int xa = x + xp;
                 if(xa<-sprite.SIZE || xa>=width || ya<0 || ya>=width) break; // if tile is off the screen don't render
                 if(xa<0) xa =0;
-                pixels[xa + ya * width] = sprite.pixels[x+y*sprite.SIZE];
+
+                // get colour
+                int col = sprite.pixels[x+y*sprite.SIZE];
+                if(col!=0xFF0000FF) // extra ff at the start it to compensate for alpha channel loading RGBA not just RGB
+                    pixels[xa + ya * width] = col;
+
             }
         }
     }

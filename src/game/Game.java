@@ -1,5 +1,6 @@
 package game;
 
+import game.entity.mob.Player;
 import game.input.Keyboard;
 import game.graphics.Screen;
 import game.level.Level;
@@ -29,6 +30,7 @@ public class Game extends Canvas implements Runnable {
     private Keyboard key;
     private Screen screen;
     private Level level;
+    private Player player;
 
     private int fps = 0;
 
@@ -47,6 +49,7 @@ public class Game extends Canvas implements Runnable {
         screen = new Screen(width,height);
         key = new Keyboard();
         level = new RandomLevel(64,64); // new level that's 64 by 64 tiles
+        player = new Player(key);
         addKeyListener(key);
     }
 
@@ -101,61 +104,9 @@ public class Game extends Canvas implements Runnable {
     }
 
     // game tick
-    int x=0,y=0; //TODO
-    int lastX = 0, lastY = 0;
-
-    public boolean inTheMap(int x, int y){
-        if(x<730 && x>-6 && y<866 && y>-6)
-            return true;
-        return false;
-    }
-
     public void update(){
-
         key.update();
-        int speed = 2;
-
-        // move the checks into render tile method ?
-        if(key.right) {
-            if(inTheMap(x,y)){
-                lastX = x; lastY = y;
-                x+=speed;
-            }
-            else{
-                x = lastX;
-                y = lastY;
-            }
-        }
-        if(key.up) {
-            if(inTheMap(x,y)){
-                lastX = x; lastY = y;
-                y-=speed;
-            }
-            else{
-                x = lastX;
-                y = lastY;
-            }
-        }
-        if(key.left) {
-            if(inTheMap(x,y)){
-                lastX = x; lastY = y;
-                x -= speed;
-            }
-            else{
-                x = lastX;
-                y = lastY;
-            }
-        }
-        if(key.down) {
-            if(inTheMap(x,y)){
-                lastX = x; lastY = y;
-                y += speed;
-            }
-            else{
-                x = lastX;
-                y = lastY;
-            }
-        }
+        player.update();
     }
 
     public void render(){
@@ -166,7 +117,13 @@ public class Game extends Canvas implements Runnable {
         }
 
         screen.clear();
-        level.render(x,y,screen);
+
+        // for player offset
+        int xScroll = player.x - screen.width / 2;
+        int yScroll = player.y - screen.height / 2;
+
+        level.render(xScroll,yScroll,screen);
+        player.render(screen);
 
         for(int i=0; i<pixels.length; i++){
             pixels[i] = screen.pixels[i];
@@ -177,12 +134,13 @@ public class Game extends Canvas implements Runnable {
         g.fillRect(0,0,getWidth(),getHeight());
         g.drawImage(image, 0,0, getWidth(), getHeight(), null); // screen class test
 
+        // TODO: below is debug code for development
         g.setColor(Color.black);
         g.setFont(new Font("Helvetica",1,14));
-
         g.drawString("fps: " + getFps(), 2, 12);
-        g.drawString("x:    " + x, 2, 26);
-        g.drawString("y:    " + y, 2, 40);
+        g.drawString("x:    " + player.x, 2, 26);
+        g.drawString("y:    " + player.y, 2, 40);
+        // end dev ease code
 
         g.dispose(); // remove graphics at the end of the frame
         bs.show();

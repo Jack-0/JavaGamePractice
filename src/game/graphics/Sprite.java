@@ -8,11 +8,17 @@ public class Sprite {
     private SpriteSheet sheet;
 
     public static Sprite grass = new Sprite(16,0,0, SpriteSheet.tiles);
+    public static Sprite grassStones = new Sprite(16,1,0, SpriteSheet.tiles);
     public static Sprite voidSprite = new Sprite(16,0x6699ff);
 
+    public static Sprite player0 = new Sprite(16,0,3,SpriteSheet.tiles);
+    public static Sprite player1 = new Sprite(16,1,3,SpriteSheet.tiles);
+    public static Sprite player2 = new Sprite(16,0,4,SpriteSheet.tiles);
+    public static Sprite player3 = new Sprite(16,1,4,SpriteSheet.tiles);
+
     public Sprite(int size, int x, int y, SpriteSheet sheet) {
-        SIZE = size;
-        pixels = new int[SIZE*SIZE];
+        this.SIZE = size;
+        this.pixels = new int[SIZE*SIZE];
         this.x = x * SIZE;
         this.y = y * SIZE;
         this.sheet = sheet;
@@ -34,7 +40,7 @@ public class Sprite {
     // extract sprite from sprite sheet
     private void load(){
         for(int y = 0; y<SIZE; y++){
-            for(int x =0; x<SIZE; x++){
+            for(int x = 0; x<SIZE; x++){
                 pixels[x+y*SIZE] = sheet.pixels[(x+this.x) + (y+this.y) * sheet.SIZE];
             }
         }

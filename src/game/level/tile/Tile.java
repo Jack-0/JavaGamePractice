@@ -10,7 +10,9 @@ public class Tile {
     public Sprite sprite;
 
     public static Tile grass = new GrassTile(Sprite.grass); // grass tile is static is does not change
+    public static Tile grassStones = new GrassTile(Sprite.grassStones); // grass tile is static is does not change
     public static Tile voidTile = new VoidTile(Sprite.voidSprite);
+
 
     public Tile(Sprite sprite){
         this.sprite = sprite;

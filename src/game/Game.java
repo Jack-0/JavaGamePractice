@@ -19,7 +19,7 @@ public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 1L;
 
     public static String title = "My Game";
-    public static int width = 300; // we will render at 300 and scale up to get a bigger image - better on resources
+    public static int width = 400; // we will render at 300 and scale up to get a bigger image - better on resources
     public static int height = width / 16 * 9; // 168.5
     public static int scale = 3;
 
@@ -81,8 +81,8 @@ public class Game extends Canvas implements Runnable {
         int frames = 0;
         int updates = 0;
 
-        while(running){
-
+        while(running)
+        {
             long now = System.nanoTime();
             delta += (now-lastTime) / ns;
             lastTime = now;
@@ -95,8 +95,6 @@ public class Game extends Canvas implements Runnable {
             frames++;
             if(System.currentTimeMillis() - timer > 1000){ // if a second has passed
                 timer += 1000;
-                //frame.setTitle(title +" - fps: "+frames);
-                //System.out.println("ups = " + updates + ", fps = " + frames);
                 setFps(frames);
                 frames = updates = 0;
             }
